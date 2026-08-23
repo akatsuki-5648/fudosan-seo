@@ -1,0 +1,4 @@
+# ★公開リポジトリに入れないもの
+.DS_Store
+Thumbs.db
+*.bak

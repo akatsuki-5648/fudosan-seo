@@ -1,0 +1,224 @@
+/* 不動産SEOサイト — 基本のCSS
+   2026-08-22
+
+   ★このデザインの決め方（03_デザイン/00_デザイン調査.md の実測から）
+     日本8＋世界9サイトを測った結果、みんなが使っている物：
+       角丸 92% ／ flex 84% ／ 影 84% ／ grid 76% ／ グラデ 76%
+       transition 76% ／ keyframes 76% ／ vh 61% ／ ヒーロー 38%
+
+   ★「どれにも使っていない形」にするため、この5つを外す
+     ① 角丸を使わない（92%が使用）      → 直角
+     ② 影を使わない（84%が使用）        → 平面
+     ③ グラデを使わない（76%が使用）     → 単色
+     ④ アニメを使わない（76%が使用）     → ★速くなる＝SEOに効く
+     ⑤ ヒーローを置かない（38%が使用）   → ★1画面目から本文＝SEOに効く
+
+   ★外さない物（外しても目立たず、失う物の方が大きい）
+     flex / grid  … レイアウトの土台
+     Noto Sans JP … 日本語の標準（読めなくなるのは別問題）
+     max-width    … 行が長いと読めない
+
+   ★色（★実測：競合は1サイト平均100色前後・定番は橙#ff6838と青#4a90e2）
+     → ★定番の2色を使わない。★色数も絞る（下の変数が全部）
+*/
+
+:root{
+  /* ★色は6つだけ（★競合は平均100色）*/
+  --ink:#141414;        /* 文字 */
+  --paper:#ffffff;      /* 紙 */
+  --rule:#141414;       /* 罫線＝文字と同じ黒（★グレーの線を使わない）*/
+  --faint:#6b6b6b;      /* 補足の文字 */
+  --wash:#f4f2ed;       /* 帯の下地（★紙の色に寄せる）*/
+  --mark:#1b4d3e;       /* 差し色（★深緑。橙でも青でもない）*/
+
+  --w:1000px;           /* 本文の最大幅（★競合の実測 1000/1440 のうち狭い方）*/
+  --wide:1320px;        /* 左カラムを含めた全体 */
+  --gap:24px;
+}
+
+*{box-sizing:border-box}
+
+html{ -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"Noto Sans JP","Yu Gothic UI","Hiragino Sans",sans-serif;
+  font-size:16px;
+  line-height:1.9;
+  /* ★transition も animation も1つも書かない（★76%が使っている物を外す）*/
+}
+
+/* ── 1画面目から本文（★ヒーローを置かない）────────────── */
+.head{
+  border-bottom:2px solid var(--rule);
+  background:var(--paper);
+}
+.head .in{
+  max-width:var(--wide); margin:0 auto; padding:10px 20px;
+  display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+}
+.head .site{ font-size:15px; font-weight:700; letter-spacing:.02em; }
+.head .site a{ color:var(--ink); text-decoration:none; }
+.head .tag{ font-size:12px; color:var(--faint); }
+
+/* ── ナビ（★角丸なし・影なし・下線で区切る）───────────── */
+.nav{ border-bottom:1px solid var(--rule); }
+.nav ul{
+  max-width:var(--wide); margin:0 auto; padding:0 20px;
+  list-style:none; display:flex; flex-wrap:wrap;
+}
+.nav li{ border-right:1px solid var(--rule); }
+.nav li:first-child{ border-left:1px solid var(--rule); }
+.nav a{
+  display:block; padding:9px 14px; font-size:13px;
+  color:var(--ink); text-decoration:none;
+}
+.nav a:hover{ background:var(--ink); color:var(--paper); }
+.nav a[aria-current="page"]{ background:var(--mark); color:var(--paper); }
+
+/* ── 全体の枠（左カラム＋本文）───────────────────── */
+.wrap{
+  max-width:var(--wide); margin:0 auto; padding:0 20px 60px;
+  display:grid; grid-template-columns:250px minmax(0,1fr); gap:var(--gap);
+}
+@media(max-width:900px){
+  .wrap{ grid-template-columns:1fr; }
+  .side{ position:static !important; max-height:none !important; }
+}
+
+/* ── 左カラム＝目次（★1,286語のページでは目次が無いと読めない）── */
+.side{
+  position:sticky; top:0; align-self:start;
+  max-height:100vh; overflow:auto;
+  padding:18px 0; font-size:13px;
+  border-right:1px solid var(--rule);
+}
+.side h2{
+  font-size:12px; margin:0 0 8px; letter-spacing:.08em;
+  color:var(--faint); font-weight:600;
+}
+.side ol{ list-style:none; margin:0 0 20px; padding:0; }
+.side li{ margin:0; }
+.side a{
+  display:block; padding:3px 10px 3px 0; color:var(--ink);
+  text-decoration:none; border-left:3px solid transparent;
+  padding-left:9px;
+}
+.side a:hover{ border-left-color:var(--mark); background:var(--wash); }
+.side .n{ color:var(--faint); font-size:11px; }
+
+/* ── 本文 ────────────────────────────────── */
+main{ max-width:var(--w); padding:18px 0 0; }
+
+h1{
+  font-size:30px; line-height:1.5; margin:0 0 6px; font-weight:700;
+  letter-spacing:.01em;
+}
+.lead{ font-size:15px; margin:0 0 4px; }
+.meta{
+  font-size:12px; color:var(--faint); margin:0 0 22px;
+  padding-bottom:14px; border-bottom:2px solid var(--rule);
+}
+
+h2{
+  font-size:22px; line-height:1.5; font-weight:700;
+  margin:44px 0 4px; padding:10px 0 10px 14px;
+  border-left:10px solid var(--mark);
+  background:var(--wash);
+}
+h3{
+  font-size:16px; line-height:1.6; font-weight:700;
+  margin:26px 0 4px; padding-bottom:4px;
+  border-bottom:1px solid var(--rule);
+}
+h4{ font-size:15px; margin:18px 0 4px; }
+p{ margin:0 0 14px; }
+
+a{ color:var(--mark); }
+a:hover{ background:var(--mark); color:var(--paper); text-decoration:none; }
+
+/* ── 表（★競合の中央値は1個。★数を出す所は全部表にする）──── */
+table{
+  width:100%; border-collapse:collapse; margin:10px 0 20px;
+  font-size:14px;
+}
+caption{
+  text-align:left; font-size:13px; font-weight:700;
+  padding:0 0 6px; color:var(--ink);
+}
+th,td{ border:1px solid var(--rule); padding:7px 10px; vertical-align:top; }
+th{ background:var(--wash); text-align:left; font-weight:700; }
+td.n{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
+
+/* ── 一次情報（★競合の中央値は0本。★ここが一番空いている）── */
+.src{
+  border:2px solid var(--rule); padding:12px 14px; margin:14px 0 22px;
+  font-size:13px; background:var(--paper);
+}
+.src b{ display:block; font-size:12px; letter-spacing:.06em; margin-bottom:6px; }
+.src ul{ margin:0; padding-left:1.2em; }
+.src li{ margin:2px 0; }
+.asof{ font-size:12px; color:var(--faint); }
+
+/* ── メリット・デメリット（★実測189語。競合も必ず書いている）── */
+.md{ display:grid; grid-template-columns:1fr 1fr; gap:0; margin:10px 0 20px; }
+@media(max-width:760px){ .md{ grid-template-columns:1fr; } }
+.md>div{ border:1px solid var(--rule); padding:12px 14px; }
+.md>div+div{ border-left:none; }
+@media(max-width:760px){ .md>div+div{ border-left:1px solid var(--rule); border-top:none; } }
+.md h4{ margin:0 0 8px; font-size:14px; letter-spacing:.04em; }
+.md ul{ margin:0; padding-left:1.2em; font-size:14px; }
+
+/* ── 語の一覧（★h3で受けきれない語をここで受ける）───────── */
+.words{
+  columns:3 220px; column-gap:22px; font-size:13px;
+  margin:8px 0 20px; padding:12px 14px; border:1px solid var(--rule);
+}
+.words a{ display:block; padding:1px 0; }
+
+/* ── 脚注・フッター ───────────────────────────── */
+.foot{
+  border-top:2px solid var(--rule); margin-top:50px;
+  background:var(--paper);
+}
+.foot .in{ max-width:var(--wide); margin:0 auto; padding:20px; font-size:13px; }
+.foot ul{ list-style:none; margin:0 0 14px; padding:0;
+  display:flex; flex-wrap:wrap; gap:0 18px; }
+.foot a{ color:var(--ink); }
+.foot .note{ color:var(--faint); font-size:12px; line-height:1.8; }
+
+/* ★印刷（★論文として読めること）*/
+@media print{
+  .side,.nav{ display:none; }
+  .wrap{ display:block; }
+  a{ color:var(--ink); text-decoration:underline; }
+}
+
+/* ★根拠条文（★競合は条番号を書かない＝ここが一番の差になる）
+   ★左の縦線1本だけ。★角丸・影・グラデは使わない（実測で外した5つ） */
+.law{
+  margin:6px 0 18px; padding:6px 0 6px 12px;
+  border-left:3px solid var(--mark);
+  font-size:13px; color:var(--faint);
+}
+.law a{ color:var(--mark); }
+
+/* ★まだ書いていない見出し（★埋めたふりをしない印） */
+.todo{ color:var(--faint); font-size:13px; }
+
+/* ★用語の頭（本文の先頭に置く語そのもの） */
+main p b{ color:var(--ink); }
+
+/* ★まだ本文を書いていない語（★見出しにはしない＝機械的な列を作らない） */
+.words{ margin:10px 0 22px; font-size:13px; color:var(--faint); line-height:2; }
+.words span{ display:inline-block; margin-right:14px; white-space:nowrap; }
+.words span::before{ content:"・"; color:var(--rule); }
+
+
+/* ★h1の直後のタイトルアイキャッチ（★実測：上位9本すべてが og:image を持つ）
+   ★角丸・影は付けない。サイト全体で外している5つのうちの2つ。 */
+.eye{display:block;width:100%;height:auto;margin:0 0 1.6rem;
+     border:1px solid var(--ink)}
+@media(max-width:700px){.eye{margin-bottom:1.1rem}}
