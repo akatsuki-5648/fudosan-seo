@@ -1,6 +1,10 @@
 {
  "name": "不動産の教科書",
  "short_name": "不動産の教科書",
+ "description": "不動産の売買・契約・登記・税金・情報源を一次情報から整理する教科書",
+ "lang": "ja",
+ "id": "/",
+ "scope": "/",
  "icons": [
   {
    "src": "/android-chrome-192x192.png",
@@ -11,6 +15,12 @@
    "src": "/android-chrome-512x512.png",
    "sizes": "512x512",
    "type": "image/png"
+  },
+  {
+   "src": "/maskable-icon-512x512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
   }
  ],
  "theme_color": "#1b4d3e",
