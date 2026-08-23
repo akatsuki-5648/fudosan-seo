@@ -187,7 +187,21 @@ td.n{ text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap; }
 .foot ul{ list-style:none; margin:0 0 14px; padding:0;
   display:flex; flex-wrap:wrap; gap:0 18px; }
 .foot a{ color:var(--ink); }
-.foot .note{ color:var(--faint); font-size:12px; line-height:1.8; }
+/* 🚨★注記を「読み飛ばされる前提の小さい灰色」にしない（★正本 防衛表記 4-2
+   「見た目が効力を決める。小さい灰色の但し書きは、明瞭に表示したことにならない」）
+   ★本文と同じ 15px・墨色。★枠で囲って「読むべき情報」の格にする。 */
+.foot .notice{ margin:22px 0 0; padding:18px 20px;
+               border:1px solid var(--ink); background:var(--paper); }
+.foot .notice h2{ font-size:15px; margin:0 0 10px; letter-spacing:.04em; }
+.foot .notice p{ font-size:15px; line-height:1.95; margin:0 0 12px; color:var(--ink); }
+.foot .notice p:last-child{ margin-bottom:0; }
+.foot .notice b{ font-weight:700; }
+.foot .copy{ margin:18px 0 0; padding-top:14px; border-top:1px solid var(--ink);
+             font-size:13px; text-align:center; color:var(--ink); }
+@media(max-width:700px){
+  .foot .notice{ padding:14px 15px; }
+  .foot .notice p{ font-size:14px; line-height:1.9; }
+}
 
 /* ★印刷（★論文として読めること）*/
 @media print{
